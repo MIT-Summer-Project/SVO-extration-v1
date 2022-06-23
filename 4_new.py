@@ -3,7 +3,7 @@ nlp = spacy.load("en_core_web_sm")
 
 # object and subject constants
 OBJECT_DEPS = {"dobj", "dative", "attr", "oprd"}
-SUBJECT_DEPS = {"nsubj", "nsubjpass", "csubj", "agent", "expl"}
+SUBJECT_DEPS = {"nsubj", "nsubjpass", "csubj", "csubjpass", "agent", "expl"}
 # tags that define wether the word is wh-
 WH_WORDS = {"WP", "WP$", "WRB"}
 
@@ -37,14 +37,18 @@ def is_question(doc):
     return False, ""
 
 # gather the user input and gather the info
-while True:    
+def funy():
     doc = nlp(input("> "))
-    # print out the pos and deps
-    for token in doc:
-        print("Token {} POS: {}, dep: {}".format(token.text, token.pos_, token.dep_))
-
     # get the input information
     subject, verb, attribute = extract_svo(doc)
     question, wh_word = is_question(doc)
-    print("svo:, subject: {}, verb: {}, attribute: {}, question: {}, wh_word: {}".format(subject, verb, attribute, question, wh_word))
+    print(" subject: {}\n verb: {}\n attribute: {}\n question: {}\n wh_word: {}".format(subject, verb, attribute, question, wh_word))
+
+while True:
+    ques = input("Do you have a question?\n Type Y/N\n")
+    match ques:
+        case "Y" :
+            funy()
+        case "N" :
+            exit()
     
